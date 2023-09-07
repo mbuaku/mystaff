@@ -13,6 +13,75 @@ employee = Employee("Froylan", 25, "1234,Jose st, NY 70043", 54000, "GZ6014282",
 db = DB_Operations("employee_db.db")
 root = tk.Tk()
 
+def add_employee_dialog():
+    # Create a new window for adding an employee
+    add_employee_window = tk.Toplevel(root)
+    add_employee_window.title("Add New Employee")
+
+    # Create input field for employee details
+    name_label = tk.Label(add_employee_window, text="Name:")
+    name_entry = tk.Entry(add_employee_window)
+
+    age_label = tk.Label(add_employee_window, text="Age:")
+    age_entry = tk.Entry(add_employee_window)
+
+    address_label = tk.Label(add_employee_window, text="Address:")
+    address_entry = tk.Entry(add_employee_window)
+    
+    salary_label = tk.Label(add_employee_window, text="Salary:")
+    salary_entry = tk.Entry(add_employee_window)
+
+    id_label = tk.Label(add_employee_window, text="ID:")
+    id_entry = tk.Entry(add_employee_window)
+
+    dept_label = tk.Label(add_employee_window, text="Department:")
+    dept_entry = tk.Entry(add_employee_window)
+
+    # Function to handle the submission of employee details
+    def submit_employee():
+        # Get values form the input fields
+        emp_name = name_entry.get()
+        emp_age = age_entry.get()
+        emp_address = address_entry.get()
+        emp_salary = salary_entry.get()
+        emp_id = id_entry.get()
+        emp_dept = dept_entry.get()
+
+        # Create an Employee object and insert into the databse
+        new_employee = Employee(emp_name, emp_age, emp_address, emp_salary, emp_id, emp_dept)
+        db.insert_employee(new_employee)
+        
+        # Close the window after adding the employee
+        add_employee_window.destroy()
+        view_employees()
+
+    # Create a "Submit" button to add the employee
+    submit_button = tk.Button(add_employee_window, text="Submin", command=submit_employee)
+
+    # Place input fields and button on the window using the grid layout
+    name_label.grid(row=0, column=0, padx=10, pady=5)
+    name_entry.grid(row=0, column=1, padx=10, pady=5)
+
+    age_label.grid(row=1, column=0, padx=10, pady=5)
+    age_entry.grid(row=1, column=1, padx=10, pady=5)
+
+    address_label.grid(row=2, column=0, padx=10, pady=5)
+    address_entry.grid(row=2, column=1, padx=10, pady=5)
+    
+    salary_label.grid(row=3, column=0, padx=10, pady=5)
+    salary_entry.grid(row=3, column=1, padx=10, pady=5)
+
+    id_label.grid(row=4, column=0, padx=10, pady=5)
+    id_entry.grid(row=4, column=1, padx=10, pady=5)
+
+    dept_label.grid(row=5, column=0, padx=10, pady=5)
+    dept_entry.grid(row=5, column=1, padx=10, pady=5)
+
+    submit_button.grid(row=6, columnspan=2, padx=10, pady=10)
+
+    # Run the new widnow
+    add_employee_window.mainloop()
+
 def add_employee():
     print("new employee added")
 
@@ -49,7 +118,7 @@ def create_gui():
 
     # Create buttons
     view_button = tk.Button(root, text="View All Employees", command=view_employees)
-    add_button = tk.Button(root, text="Add Employee", command=add_employee)
+    add_button = tk.Button(root, text="Add Employee", command=add_employee_dialog)
 
     # Pack buttons 
     view_button.grid(row=1, column=0, padx=10, pady=10)
