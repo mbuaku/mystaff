@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import ttk
 from person import Person
 from employee import Employee
 from db_operations import DB_Operations
@@ -9,6 +11,42 @@ employee = Employee("Froylan", 25, "1234,Jose st, NY 70043", 54000, "GZ6014282",
 
 # Initialize the database operations
 db = DB_Operations("employee_db.db")
+root = tk.Tk()
+
+def view_employees():
+    # Add code to display employees in a GUI window
+
+    employee_window = tk.Top
+    all_employees = db.get_all_employees()
+    #root = tk.Tk()
+    for employee in all_employees:
+        label = tk.Label(root, text=f"{employee['name']}, '-', {employee['employee_id']}, '-', {employee['department']}")
+        label.pack()
+    print("Viewing all employee")
+
+def add_employee():
+    # Add code to open a GUI window for adding an employee
+    print("New Employee Added Successfully")
+
+def create_gui():
+    #root = tk.Tk()
+    root.title("Employee Management GUI")
+    # Add your gui elements here
+    
+    # Create labels
+    label = tk.Label(root, text="Welcome to Employee Manager")
+    label.pack()
+
+    # Create buttons
+    view_button = tk.Button(root, text="View All Employees", command=view_employees)
+    add_button = tk.Button(root, text="Add Employee", command=add_employee)
+
+    # Pack buttons 
+    view_button.pack()
+    add_button.pack()
+
+    root.mainloop()
+
 
 def default_op():
    while True:
@@ -52,6 +90,6 @@ def default_op():
        else:
            print("Choice does not exist, Tree Again")
 
-
-default_op()
+create_gui()
+#default_op()
 db.close_connection()
